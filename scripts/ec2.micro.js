@@ -2,6 +2,9 @@ const execa = require('execa');
 const {Signale} = require('signale');
 const signale = new Signale();
 
+const moment = require('moment');
+const timeFormat = 'YYYYMMDD HH:mm:ss';
+
 const profile = process.env.CLI_PROFILE;
 const asyncStdIn = () => new Promise((resolve, reject) => {
     const p = process.stdin.on('data', data => {
@@ -16,7 +19,7 @@ const asyncStdIn = () => new Promise((resolve, reject) => {
 const main = async () => {
     try {
         if(!profile) throw new Error(`CLI_PROFILE should be defined`);
-        signale.success(`AWSCLI Profile: ${profile}`);
+        signale.success(`${moment().format(timeFormat)} AWSCLI Profile: ${profile}`);
 
         const describedVpcs = JSON.parse((await execa.shell(`aws ec2 describe-vpcs --profile ${profile}`)).stdout);
         signale.info(describedVpcs);
@@ -55,7 +58,7 @@ const main = async () => {
         --query 'Instances[0].InstanceId' \
         --profile ${profile}`)).stdout;
 
-        signale.success(`${ec2Result} is successfully created!`);
+        signale.success(`${moment().format(timeFormat)} ${ec2Result} is successfully created!`);
         process.exit(0);
     } catch (err) {
         signale.error(err);
