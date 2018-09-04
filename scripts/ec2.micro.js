@@ -2,7 +2,7 @@ const execa = require('execa');
 const {Signale} = require('signale');
 const signale = new Signale();
 
-const profile = "workshopUser";
+const profile = process.env.CLI_PROFILE;
 const asyncStdIn = () => new Promise((resolve, reject) => {
     const p = process.stdin.on('data', data => {
         const str = data.toString().split("\n")[0];
