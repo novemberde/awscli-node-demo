@@ -22,6 +22,7 @@
     "execa": "^0.10.0"
   },
   "dependencies": {
+    "moment": "^2.22.2",
     "signale": "^1.2.1"
   }
 }
